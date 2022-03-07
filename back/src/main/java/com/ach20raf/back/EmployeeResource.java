@@ -18,11 +18,11 @@ public class EmployeeResource {
     }
 
 
-    @GetMapping("all")
+    @GetMapping("/all")
     public ResponseEntity<List<Employee>>  getAllEmployees()
     {
         List<Employee>employees=employeeService.findAllEmployees();
-        return new ResponseEntity<>(employees, HttpStatus.FOUND);
+        return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
     @GetMapping("/find{id}")
