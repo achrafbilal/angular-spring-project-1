@@ -25,11 +25,11 @@ public class EmployeeResource {
         return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
-    @GetMapping("/find{id}")
+    @GetMapping("/find/{id}")
     public ResponseEntity<Employee>  getEmployeeByID(@PathVariable("id") Long id)
     {
         Employee employee=employeeService.findEmployeeById(id);
-        return new ResponseEntity<>(employee, HttpStatus.FOUND);
+        return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
     @PostMapping("/add")
@@ -44,13 +44,14 @@ public class EmployeeResource {
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee)
     {
         Employee previousEmployee=employeeService.updateEmployee(employee);
-        return new ResponseEntity<>(previousEmployee,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(previousEmployee,HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteEmployee(@PathVariable("id") Long id)
+    public ResponseEntity<Long> deleteEmployee(@PathVariable("id") Long id)
     {
         employeeService.deleteEmployee(id);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<Long>(id,HttpStatus.OK);
+        /*return new ResponseEntity<Long>(HttpStatus.OK);*/
     }
 }

@@ -4,8 +4,10 @@ import com.ach20raf.back.exception.UserNotFoundException;
 import com.ach20raf.back.model.Employee;
 import com.ach20raf.back.repo.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,9 +41,12 @@ public class EmployeeService {
         return employeeRepo.findEmployeeById(id).orElseThrow(() -> new UserNotFoundException("employee by id " + id + " was not found"));
     }
 
-    public void deleteEmployee(Long id)
-    {
+    @Query("delete from Employee e where e.id = :id")
+    //this @Transactional is important when using custom transactions method created by you in the repository
+    @Transactional
+    public void deleteEmployee(Long id){
+        System.out.println(id);
         employeeRepo.deleteEmployeeById(id);
-        //employeeRepo.delete(employeeRepo.getById(id));
     }
+
 }
